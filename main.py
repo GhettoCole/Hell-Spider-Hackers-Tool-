@@ -1,3 +1,5 @@
+# Programmer: Given Lepita
+# Project: Hacking
 from time import sleep
 from exploits import NetworkIntelligence
 from exploits import ScraperInfo
