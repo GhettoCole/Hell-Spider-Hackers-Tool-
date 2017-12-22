@@ -54,7 +54,7 @@ def main():
     table = PrettyTable()
     table.field_names = [
         "1 - Network Intelligence", "2 - Scraping",
-        "3 - IP Lookup", "4 - Payloads", "5 - Ping"
+        "3 - IP Lookup", "4 - Payloads", "5 - Ping", "6 - Update Tool"
     ]
     options = ["""
 [+] NMAP Scans
@@ -73,14 +73,16 @@ def main():
 [+] NetCat Shell (Remote Exploitation)
 [+] Panel Shell Exploit
 [+] FTP Exploit!
-    """, "[+] Ping Host"]
+    """, "[+] Ping Host", "[+] NEW Exploits & Updates"]
     table.add_row(
         [
-        options[0], options[1], options[2], options[3], options[4]
+            options[0], options[1],
+            options[2], options[3],
+            options[4], options[5],
         ]
     )
     table.align = "l"
-    print(colors["MAGENTA"], table, colors["END"])
+    print(colors["MAGENTA"], table.field_names, colors["END"])
     baseClass = int(input("Choose option:  "))
 
     if baseClass == 1:
@@ -150,6 +152,13 @@ def main():
             ip = input("Enter IP address to ping:  ")
             baseObject = Ping(ip)
             baseObject.pingScan()
+        except Exception as e:
+            print("Error ", e)
+    elif baseClass == 6:
+        try:
+            default = "https://google.com/"
+            baseObject = WebCrawler(default)
+            baseObject.update_tool()
         except Exception as e:
             print("Error ", e)
 
