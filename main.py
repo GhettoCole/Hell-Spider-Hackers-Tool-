@@ -9,6 +9,7 @@ from src.exploits.ip_lookup import IPLookUp
 from src.exploits.ping import Ping
 from src.exploits.payloads import PayLoads
 from src.exploits.info_scraper import ScraperInfo
+from src.exploits.tcp_fuzzer import TCP_Fuzzer
 from Webcrawler import WebCrawler
 
 TAB = "\t" * 2
@@ -55,7 +56,8 @@ def main():
     table = PrettyTable()
     table.field_names = [
         "1 - Network Intelligence", "2 - Scraping",
-        "3 - IP Lookup", "4 - Payloads", "5 - Ping", "6 - Update Tool"
+        "3 - IP Lookup", "4 - Payloads", "5 - Ping", "6 - TCP Fuzzer",
+        "7 - Update Tool",
     ]
     options = ["""
 [+] NMAP Scans
@@ -72,12 +74,14 @@ def main():
 [+] NetCat Shell (Remote Exploitation)
 [+] Panel Shell Exploit
 [+] FTP Exploit!
-    """, "[+] Ping Host", "[+] NEW Exploits & Updates"]
+    """, "[+] Ping Host", "[+] NEW Exploits & Updates", "[+] TCP Fuzzer"
+    ]
     table.add_row(
         [
             options[0], options[1],
             options[2], options[3],
             options[4], options[5],
+            options[6],
         ]
     )
     table.align = "l"
@@ -154,6 +158,14 @@ def main():
         except Exception as e:
             print("Error ", e)
     elif baseClass == 6:
+        try:
+            host = input("Enter Host/IP Address:   ")
+            port = int(input("Enter port number:   "))
+            baseObject = TCP_Fuzzer(host, port)
+            baseObject.run_fuzzer()
+        except Exception as e:
+            print("Error ", e)
+    elif baseClass == 7:
         try:
             default = "https://google.com/"
             baseObject = WebCrawler(default)
