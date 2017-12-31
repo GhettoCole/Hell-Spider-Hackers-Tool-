@@ -10,6 +10,7 @@ from src.exploits.ping import Ping
 from src.exploits.payloads import PayLoads
 from src.exploits.info_scraper import ScraperInfo
 from src.exploits.tcp_fuzzer import TCP_Fuzzer
+from src.exploits.root_exploit import ShellRoot
 from Webcrawler import WebCrawler
 
 TAB = "\t" * 2
@@ -57,7 +58,7 @@ def main():
     table.field_names = [
         "1 - Network Intelligence", "2 - Scraping",
         "3 - IP Lookup", "4 - Payloads", "5 - Ping", "6 - TCP Fuzzer",
-        "7 - Update Tool",
+        "7 - bash exploits", "8 - Update Tool",
     ]
     options = ["""
 [+] NMAP Scans
@@ -74,14 +75,17 @@ def main():
 [+] NetCat Shell (Remote Exploitation)
 [+] Panel Shell Exploit
 [+] FTP Exploit!
-    """, "[+] Ping Host", "[+] NEW Exploits & Updates", "[+] TCP Fuzzer"
+    """, "[+] Ping Host", "[+] NEW Exploits & Updates", "[+] TCP Fuzzer", """
+[+] setuid screen v4.5.0 local root exploit
+"""
     ]
+
     table.add_row(
         [
             options[0], options[1],
             options[2], options[3],
             options[4], options[5],
-            options[6],
+            options[6], options[7]
         ]
     )
     table.align = "l"
@@ -166,6 +170,12 @@ def main():
         except Exception as e:
             print("Error ", e)
     elif baseClass == 7:
+        try:
+            baseObject = ShellRoot()
+            baseObject.exploit()
+        except Exception as e:
+            print("Error ", e)
+    elif baseClass == 8:
         try:
             default = "https://google.com/"
             baseObject = WebCrawler(default)
